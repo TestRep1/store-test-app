@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import FormInput from '../form-input/form-input';
 import CustomButton from '../custom-button/custom-button';
+import {signWithGoogle} from '../../utils/FirebaseUtil';
 
 import './login.scss';
 
@@ -22,6 +23,7 @@ const Login = () => {
                 <FormInput name="email" type="email" value={user.email} required onChange={onChange} label="Email"/>
                 <FormInput name="password" type="password" value={user.password} required onChange={onChange} label="Password"/>
                 <CustomButton type="submit">Login</CustomButton>
+                <CustomButton onClick={signWithGoogle}>Login with Google</CustomButton>
             </form>
 
         </div>
