@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import FormInput from '../form-input/form-input';
 import CustomButton from '../custom-button/custom-button';
-import { signWithGoogle } from '../../utils/FirebaseUtil';
+import { signWithGoogle, auth } from '../../utils/FirebaseUtil';
 
 import './login.scss';
 
 const Login = () => {
     const [user, setUser] = useState({ email: '', password: '' });
 
-    const onSubmit = e => {
+    const onSubmit = async e => {
         e.preventDefault();
 
+        try {
+            await auth.signInWithEmailAndPassword(user.email, user.password);
+            setUser({ email: '', password: '' });
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
@@ -24,7 +30,7 @@ const Login = () => {
                 <FormInput name="password" type="password" value={user.password} required onChange={onChange} label="Password" />
                 <div className="buttons">
                     <CustomButton type="submit">Login</CustomButton>
-                    <CustomButton onClick={signWithGoogle} classes="google-sign-in">Login with Google</CustomButton>
+                    <CustomButton type="button" onClick={signWithGoogle} classes="google-sign-in">Login with Google</CustomButton>
                 </div>
             </form>
 
