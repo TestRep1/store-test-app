@@ -22,6 +22,6 @@ export const selectCollectionsArray = createSelector(
 
 export const selectCollection = routeParam =>
     createSelector(
-        [selectCollectionsArray],
-        collections => collections[COLLECTION_ID_MAP[routeParam]]
+        [selectCollections],
+        collections => collections[routeParam]
     )
