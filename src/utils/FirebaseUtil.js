@@ -24,12 +24,12 @@ provider.setCustomParameters({ prompt: 'select_account' });
 export const signWithGoogle = () => auth.signInWithPopup(provider);
 
 export const createUserProfile = async (userAuth, additionalData) => {
-  if(!userAuth) return;
+  if (!userAuth) return;
 
   const userRef = firestore.doc(`/users/${userAuth.uid}`);
   const snapshot = await userRef.get();
-  if(!snapshot.exists) {
-    const {displayName, email} = userAuth;
+  if (!snapshot.exists) {
+    const { displayName, email } = userAuth;
     const createdAt = new Date();
     try {
       await userRef.set({
@@ -47,13 +47,30 @@ export const createUserProfile = async (userAuth, additionalData) => {
 
 export const addCollectionAndDocuments = async (colKey, objectsToAdd) => {
   const collectionRef = firestore.collection(colKey)
-  
+
   const batch = firestore.batch();
   objectsToAdd.forEach(element => {
     const newDocRef = collectionRef.doc();
     batch.set(newDocRef, element);
   });
   return await batch.commit();
+}
+
+export const convertCollectionsSnapshotToMap = collections => {
+  const result = collections.docs.map(doc => {
+    const { title, items } = doc.data();
+    return {
+      routeName: encodeURI(title.toLowerCase()),
+      id: doc.id,
+      title,
+      items
+    }
+  });
+
+  return result.reduce((obj, element) => {
+    obj[element.title.toLowerCase()] = element
+    return obj;
+  }, {});
 }
 
 export default firebase;

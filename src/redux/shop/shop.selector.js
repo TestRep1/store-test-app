@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import shopPage from '../../pages/shop/shop-page';
 
 const COLLECTION_ID_MAP = {
     hats: 1,
@@ -17,11 +18,16 @@ export const selectCollections = createSelector(
 
 export const selectCollectionsArray = createSelector(
     [selectCollections],
-    collections => Object.keys(collections).map(key => collections[key])
-) 
+    collections => collections ? Object.keys(collections).map(key => collections[key]) : []
+)
 
 export const selectCollection = routeParam =>
     createSelector(
         [selectCollections],
-        collections => collections[routeParam]
+        collections => collections ? collections[routeParam] : null
     )
+
+export const selectIsFetching = createSelector(
+    [selectShop],
+    shop => shopPage.isFetching
+)
