@@ -1,6 +1,6 @@
 import ShopTypes from './shop.types';
 import { firestore, convertCollectionsSnapshotToMap } from '../../utils/FirebaseUtil';
-import shopPage from '../../pages/shop/shop-page';
+
 
 
 export const updateCollections = collections => ({
@@ -24,17 +24,17 @@ export const fetchCollectionsFailure = errorMsg => ({
     payload: errorMsg
 })
 
-export const fetchCollectionsAsync = () => {
-    return dispatch => {
-        dispatch(fetchCollectionsStart());
+// export const fetchCollectionsAsync = () => {
+//     return dispatch => {
+//         dispatch(fetchCollectionsStart());
 
-        const collectionsRef = firestore.collection('collections');
-        collectionsRef.get().then(snapshot => {
-            const result = convertCollectionsSnapshotToMap(snapshot);
-            dispatch(fetchCollectionsSuccess(result));
-        }).catch(error => dispatch(fetchCollectionsFailure(error.message)))
-    }
-}
+//         const collectionsRef = firestore.collection('collections');
+//         collectionsRef.get().then(snapshot => {
+//             const result = convertCollectionsSnapshotToMap(snapshot);
+//             dispatch(fetchCollectionsSuccess(result));
+//         }).catch(error => dispatch(fetchCollectionsFailure(error.message)))
+//     }
+// }
 
 
 

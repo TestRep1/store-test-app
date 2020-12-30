@@ -10,11 +10,11 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case ShopTypes.FETCH_COLLECTIONS_START:
-            return {
-                ...state,
-                isFetching: true
-            }
+        // case ShopTypes.FETCH_COLLECTIONS_START:
+        //     return {
+        //         ...state,
+        //         isFetching: true
+        //     }
         case ShopTypes.FETCH_COLLECTIONS_SUCCESS:
             return {
                 ...state,
